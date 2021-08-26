@@ -1,0 +1,7 @@
+/env/
+/venv/
+.idea/
+probe.py
+*.log
+db.sqlite3
+settings.py
