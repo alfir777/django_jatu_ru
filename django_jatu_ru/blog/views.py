@@ -30,7 +30,7 @@ def add_post(request):
         form = BlogForm(request.POST)
         if form.is_valid():
             # print(form.cleaned_data)
-            post = Blog.objects.create(**form.cleaned_data)
+            post = form.save()
             return redirect(post)
     else:
         form = BlogForm()
