@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from .models import Blog, Category
+from .forms import BlogForm
 
 
 def index(request):
@@ -22,3 +23,11 @@ def view_blog(request, blog_id):
     # blog_item = Blog.objects.get(pk=blog_id)
     blog_item = get_object_or_404(Blog, pk=blog_id)
     return render(request, 'blog/view_blog.html', {'blog_item': blog_item})
+
+
+def add_post(request):
+    if request.method == 'POST':
+        pass
+    else:
+        form = BlogForm()
+    return render(request, 'blog/add_post.html', {'form': form})
