@@ -1,88 +1,49 @@
-<!doctype html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block title %}
+    {{ category.title }} :: {{ block.super }}
+{% endblock %}
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+{% block sidebar %}
 
-    <title>{{ category.title }}</title>
-</head>
-<body>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">JATU.RU</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Главная</a></li>
-                {% for category in categories %}
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'category' category.pk %}">
-                    {{ category.title }}
-                </a></li>
-                {% endfor %}
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Добавить запись</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<div class="container mt-3">
-    <div class="row">
-
-        <div class="col-md-3">
-            <div class="list-group">
-                {% for category in categories %}
-                <a href="{% url 'category' category.pk %}" class="list-group-item list-group-item-action">{{ category.title }}</a>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="col-md-8">
-            {% for item in blogs %}
-            <div class="row g-0">
-                <div class="card-header">
-                    Категория: <a href="{% url 'category' item.category.pk %}" class="">{{ item.category.title }}</a>
-                </div>
-                <div class="col-md-3">
-                    {% if item.photo %}
-                        <img src="{{ item.photo.url }}" alt=""  width="350" height="235"  class="img-fluid rounded-start">
-                    {% else %}
-                        <img src="https://picsum.photos/id/1060/350/235/?blur=2" alt="" class="img-fluid rounded-start">
-                    {% endif %}
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ item.title }}</h5>
-                        <p class="card-text">{{ item.content|safe|linebreaks|truncatewords:50 }}</p>
-                        <a href="/" class="btn btn-primary">Read more...</a>
-                    </div>
-                </div>
-                <div class="card-footer text-muted">
-                    {{ item.created_at|date:"Y-m-d H:i:s" }}
-                </div>
-                <hr>
-            </div>
-            {% endfor %}
-        </div>
-
+<div class="col-md-3">
+    <div class="list-group">
+        {% for category in categories %}
+        <a href="{% url 'category' category.pk %}" class="list-group-item list-group-item-action">{{ category.title }}</a>
+        {% endfor %}
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-        integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
-        integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-8">
+    {% for item in blogs %}
+    <div class="row g-0">
+        <div class="card-header">
+            Категория: <a href="{% url 'category' item.category.pk %}" class="">{{ item.category.title }}</a>
+        </div>
+        <div class="col-md-3">
+            {% if item.photo %}
+            <img src="{{ item.photo.url }}" alt="" width="350" height="235" class="img-fluid rounded-start">
+            {% else %}
+            <img src="https://picsum.photos/id/1060/350/235/?blur=2" alt="" class="img-fluid rounded-start">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+                <p class="card-text">{{ item.content|safe|linebreaks|truncatewords:50 }}</p>
+                <a href="/" class="btn btn-primary">Read more...</a>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            {{ item.created_at|date:"Y-m-d H:i:s" }}
+        </div>
+        <hr>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
