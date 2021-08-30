@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Blog, Category
 
@@ -16,3 +16,9 @@ def get_category(request, category_id):
     blogs = Blog.objects.filter(category_id=category_id)
     category = Category.objects.get(pk=category_id)
     return render(request, 'blog/category.html', {'blogs': blogs, 'category': category})
+
+
+def view_blog(request, blog_id):
+    # blog_item = Blog.objects.get(pk=blog_id)
+    blog_item = get_object_or_404(Blog, pk=blog_id)
+    return render(request, 'blog/view_blog.html', {'blog_item': blog_item})
