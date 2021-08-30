@@ -35,8 +35,17 @@
 
 <div class="container mt-3">
     <div class="row">
-        {% for item in blogs %}
+
+        <div class="col-md-3">
+            <div class="list-group">
+                {% for category in categories %}
+                <a href="{% url 'category' category.pk %}" class="list-group-item list-group-item-action">{{ category.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
         <div class="col-md-8">
+            {% for item in blogs %}
             <div class="row g-0">
                 <div class="card-header">
                     Категория: <a href="{% url 'category' item.category.pk %}" class="">{{ item.category.title }}</a>
@@ -60,8 +69,9 @@
                 </div>
                 <hr>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+
     </div>
 </div>
 
