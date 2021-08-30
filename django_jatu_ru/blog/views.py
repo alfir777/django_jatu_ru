@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Blog, Category
 from .forms import BlogForm
@@ -27,7 +27,11 @@ def view_blog(request, blog_id):
 
 def add_post(request):
     if request.method == 'POST':
-        pass
+        form = BlogForm(request.POST)
+        if form.is_valid():
+            # print(form.cleaned_data)
+            post = Blog.objects.create(**form.cleaned_data)
+            return redirect(post)
     else:
         form = BlogForm()
     return render(request, 'blog/add_post.html', {'form': form})
