@@ -23,6 +23,7 @@ class HomeBlog(MyMixin, ListView):
     context_object_name = 'blog'
     mixin_prop = 'Hello World'
     # extra_context = {'title': 'Главная'}
+    paginate_by = 2
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -39,6 +40,7 @@ class BlogByCategory(ListView):
     template_name = 'blog/home_blog_list.html'
     context_object_name = 'blog'
     allow_empty = False
+    paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
