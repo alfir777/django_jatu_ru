@@ -20,13 +20,28 @@ class HomeBlog(ListView):
         return Blog.objects.filter(is_published=True)
 
 
-def index(request):
-    blogs = Blog.objects.all()
-    context = {
-        'blogs': blogs,
-        'title': 'Мои блоги',
-    }
-    return render(request, template_name='blog/index.html', context=context)
+class BlogByCategory(ListView):
+    model = Blog
+    template_name = 'blog/home_blog_list.html'
+    context_object_name = 'blog'
+    allow_empty = False
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = Category.objects.get(pk=self.kwargs['category_id'])
+        return context
+
+    def get_queryset(self):
+        return Blog.objects.filter(category_id=self.kwargs['category_id'], is_published=True)
+
+
+# def index(request):
+#     blogs = Blog.objects.all()
+#     context = {
+#         'blogs': blogs,
+#         'title': 'Мои блоги',
+#     }
+#     return render(request, template_name='blog/index.html', context=context)
 
 
 def get_category(request, category_id):
