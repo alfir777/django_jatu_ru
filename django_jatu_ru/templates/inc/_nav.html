@@ -17,8 +17,10 @@
                     {{ category.title }}
                 </a></li>
                 {% endfor %}
+                {% if request.user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'add_post' %}">Добавить
                     запись</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>

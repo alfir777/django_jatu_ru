@@ -1,20 +1,24 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Blog, Category
 from .forms import BlogForm
+from .utils import MyMixin
 
 
-class HomeBlog(ListView):
+class HomeBlog(MyMixin, ListView):
     model = Blog
     template_name = 'blog/home_blog_list.html'
     context_object_name = 'blog'
+    mixin_prop = 'Hello World'
     # extra_context = {'title': 'Главная'}
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Главная страница'
+        context['title'] = self.get_upper('Главная страница')
+        context['mixin_prop'] = self.get_prop()
         return context
 
     def get_queryset(self):
@@ -43,10 +47,12 @@ class ViewBlog(DetailView):
     # template_name = 'blog/blog_detail.html'
 
 
-class CreatePost(CreateView):
+class CreatePost(LoginRequiredMixin, CreateView):
     form_class = BlogForm
     template_name = 'blog/add_post.html'
     # success_url = reverse_lazy('home')
+    login_url = '/admin/'
+    # raise_exception = True
 
 
 # def index(request):
