@@ -2,10 +2,19 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 
 from .models import Blog, Category
 from .forms import BlogForm
 from .utils import MyMixin
+
+
+def test(request):
+    objects = ['john', 'paul', 'george', 'ringo', 'john2', 'paul2', 'george2', 'ringo2']
+    paginator = Paginator(objects, 5)
+    page_num = request.GET.get('page', 1)
+    page_objects = paginator.page(page_num)
+    return render(request, 'blog/test.html', {'page_obj': page_objects})
 
 
 class HomeBlog(MyMixin, ListView):
