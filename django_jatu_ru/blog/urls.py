@@ -10,7 +10,8 @@ urlpatterns = [
          BlogByCategory.as_view(extra_context={'title': 'Какой-то title'}),
          name='category',
          ),
-    path('blog/<int:blog_id>', view_blog, name='view_blog'),
+    # path('blog/<int:blog_id>', view_blog, name='view_blog'),
+    path('blog/<int:pk>', ViewBlog.as_view(), name='view_blog'),
     path('blog/add-post>', add_post, name='add_post'),
 
 ]

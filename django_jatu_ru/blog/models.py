@@ -12,7 +12,7 @@ class Blog(models.Model):
     category = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Наименование категории')
 
     def get_absolute_url(self):
-        return reverse('view_blog', kwargs={'blog_id': self.pk})
+        return reverse('view_blog', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title

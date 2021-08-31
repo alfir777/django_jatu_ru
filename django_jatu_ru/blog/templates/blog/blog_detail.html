@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ blog_item.title }} :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row g-0">
+    <div class="card-header">
+        Категория: <a href="{{ item.category.get_absolute_url }}" class="">{{ blog_item.category.title }}</a>
+    </div>
+    <div class="col-md-3">
+        {% if blog_item.photo %}
+        <img src="{{ blog_item.photo.url }}" alt="" width="350" height="235" class="img-fluid rounded-start">
+        {% else %}
+        <img src="https://picsum.photos/id/1060/350/235/?blur=2" alt="" class="img-fluid rounded-start">
+        {% endif %}
+    </div>
+    <div class="col-md-8">
+        <div class="card-body">
+            <h5 class="card-title">{{ blog_item.title }}</h5>
+            <p class="card-text">{{ blog_item.content|safe|linebreaks }}</p>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        {{ blog_item.created_at|date:"Y-m-d H:i:s" }}
+    </div>
+    <hr>
+</div>
+
+{% endblock %}

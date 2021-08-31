@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .models import Blog, Category
 from .forms import BlogForm
@@ -35,6 +35,13 @@ class BlogByCategory(ListView):
         return Blog.objects.filter(category_id=self.kwargs['category_id'], is_published=True)
 
 
+class ViewBlog(DetailView):
+    model = Blog
+    # pk_url_kwarg = 'blog_id'
+    # template_name = 'blog/blog_detail.html'
+    context_object_name = 'blog_item'
+
+
 # def index(request):
 #     blogs = Blog.objects.all()
 #     context = {
@@ -44,16 +51,16 @@ class BlogByCategory(ListView):
 #     return render(request, template_name='blog/index.html', context=context)
 
 
-def get_category(request, category_id):
-    blogs = Blog.objects.filter(category_id=category_id)
-    category = Category.objects.get(pk=category_id)
-    return render(request, 'blog/category.html', {'blogs': blogs, 'category': category})
+# def get_category(request, category_id):
+#     blogs = Blog.objects.filter(category_id=category_id)
+#     category = Category.objects.get(pk=category_id)
+#     return render(request, 'blog/category.html', {'blogs': blogs, 'category': category})
 
 
-def view_blog(request, blog_id):
-    # blog_item = Blog.objects.get(pk=blog_id)
-    blog_item = get_object_or_404(Blog, pk=blog_id)
-    return render(request, 'blog/view_blog.html', {'blog_item': blog_item})
+# def view_blog(request, blog_id):
+#     # blog_item = Blog.objects.get(pk=blog_id)
+#     blog_item = get_object_or_404(Blog, pk=blog_id)
+#     return render(request, 'blog/view_blog.html', {'blog_item': blog_item})
 
 
 def add_post(request):
