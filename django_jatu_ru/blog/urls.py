@@ -12,6 +12,7 @@ urlpatterns = [
          ),
     # path('blog/<int:blog_id>', view_blog, name='view_blog'),
     path('blog/<int:pk>', ViewBlog.as_view(), name='view_blog'),
-    path('blog/add-post>', add_post, name='add_post'),
+    # path('blog/add-post>', add_post, name='add_post'),
+    path('blog/add-post>', CreatePost.as_view(), name='add_post'),
 
 ]

@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse_lazy
 
 from .models import Blog, Category
 from .forms import BlogForm
@@ -37,9 +38,15 @@ class BlogByCategory(ListView):
 
 class ViewBlog(DetailView):
     model = Blog
+    context_object_name = 'blog_item'
     # pk_url_kwarg = 'blog_id'
     # template_name = 'blog/blog_detail.html'
-    context_object_name = 'blog_item'
+
+
+class CreatePost(CreateView):
+    form_class = BlogForm
+    template_name = 'blog/add_post.html'
+    # success_url = reverse_lazy('home')
 
 
 # def index(request):
@@ -63,13 +70,13 @@ class ViewBlog(DetailView):
 #     return render(request, 'blog/view_blog.html', {'blog_item': blog_item})
 
 
-def add_post(request):
-    if request.method == 'POST':
-        form = BlogForm(request.POST)
-        if form.is_valid():
-            # print(form.cleaned_data)
-            post = form.save()
-            return redirect(post)
-    else:
-        form = BlogForm()
-    return render(request, 'blog/add_post.html', {'form': form})
+# def add_post(request):
+#     if request.method == 'POST':
+#         form = BlogForm(request.POST)
+#         if form.is_valid():
+#             # print(form.cleaned_data)
+#             post = form.save()
+#             return redirect(post)
+#     else:
+#         form = BlogForm()
+#     return render(request, 'blog/add_post.html', {'form': form})
