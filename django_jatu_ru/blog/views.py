@@ -18,7 +18,7 @@ class HomeBlog(ListView):
         return context
 
     def get_queryset(self):
-        return Blog.objects.filter(is_published=True)
+        return Blog.objects.filter(is_published=True).select_related('category')
 
 
 class BlogByCategory(ListView):
@@ -33,7 +33,7 @@ class BlogByCategory(ListView):
         return context
 
     def get_queryset(self):
-        return Blog.objects.filter(category_id=self.kwargs['category_id'], is_published=True)
+        return Blog.objects.filter(category_id=self.kwargs['category_id'], is_published=True).select_related('category')
 
 
 class ViewBlog(DetailView):
