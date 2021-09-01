@@ -1,10 +1,21 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from django import forms
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 from .models import Blog, Category
 
 
+class BlogAdminForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Blog
+        fields = '__all__'
+
+
 class BlogAdmin(admin.ModelAdmin):
+    form = BlogAdminForm
     list_display = ('id', 'title', 'category', 'created_at', 'updated_at', 'is_published', 'get_photo')
     list_display_links = ('id', 'title')
     search_fields = ('title', 'content')
