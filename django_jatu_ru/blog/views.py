@@ -47,6 +47,26 @@ def user_logout(request):
     return redirect('login')
 
 
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            mail = send_mail(form.cleaned_data['subject'],
+                             form.cleaned_data['content'],
+                             'noreply@jatu.ru',
+                             ['admin@jatu.ru'],
+                             fail_silently=True
+                             )
+            if mail:
+                messages.success(request, 'Письмо отправлено')
+                return redirect('contact')
+            else:
+                messages.error(request, 'Ошибка отправки письма')
+    else:
+        form = ContactForm()
+    return render(request, 'blog/test.html', {'form': form})
+
+
 def test_send_mail(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
