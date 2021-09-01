@@ -7,13 +7,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
 from .models import Blog, Category
-from .forms import BlogForm
+from .forms import BlogForm, UserRegisterForm
 from .utils import MyMixin
 
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        # form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Вы успешно зарегистрировались')
@@ -21,7 +22,8 @@ def register(request):
         else:
             messages.error(request, 'Ошибка регистрации')
     else:
-        form = UserCreationForm()
+        # form = UserCreationForm()
+        form = UserRegisterForm()
     return render(request, 'blog/register.html', {'form': form})
 
 
