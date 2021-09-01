@@ -6,9 +6,10 @@ from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout
+from django.core.mail import send_mail
 
 from .models import Blog, Category
-from .forms import BlogForm, UserRegisterForm, UserLoginForm
+from .forms import BlogForm, UserRegisterForm, UserLoginForm, ContactForm
 from .utils import MyMixin
 
 
@@ -44,6 +45,26 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+
+def test_send_mail(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            mail = send_mail(form.cleaned_data['subject'],
+                             form.cleaned_data['content'],
+                             'noreply@jatu.ru',
+                             ['admin@jatu.ru'],
+                             fail_silently=True
+                             )
+            if mail:
+                messages.success(request, 'Письмо отправлено')
+                return redirect('test')
+            else:
+                messages.error(request, 'Ошибка отправки письма')
+    else:
+        form = ContactForm()
+    return render(request, 'blog/test.html', {'form': form})
 
 
 def test(request):
