@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: set env
-        uses: appleboy/ssh-action@master
+        uses: alfir777/django_jatu_ru@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
