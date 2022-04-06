@@ -21,8 +21,8 @@ jobs:
             echo DEBUG=${{ secrets.DEBUG }} >> /home/runner/work/django_jatu_ru/django_jatu_ru/.env
       - uses: actions/checkout@v2
       - name: Run tests
+        run: docker-compose up --exit-code-from tests tests
         with:
           script: |
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> /home/runner/work/django_jatu_ru/django_jatu_ru/.env
             echo DEBUG=${{ secrets.DEBUG }} >> /home/runner/work/django_jatu_ru/django_jatu_ru/.env
-        run: docker-compose up --exit-code-from tests tests
