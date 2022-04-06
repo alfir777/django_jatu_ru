@@ -8,7 +8,6 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - name: set env
         uses: alfir777/django_jatu_ru@master
         with:
