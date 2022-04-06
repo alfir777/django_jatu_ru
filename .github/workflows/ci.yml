@@ -19,6 +19,7 @@ jobs:
             export DEBUG=${{ secrets.DEBUG }}
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
             echo DEBUG=${{ secrets.DEBUG }} >> .env
+            readlink -e .env
       - uses: actions/checkout@v2
       - name: Run tests
         run: docker-compose up --exit-code-from tests tests
