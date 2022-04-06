@@ -8,6 +8,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: set env
         uses: alfir777/django_jatu_ru@master
         with:
@@ -19,10 +20,5 @@ jobs:
             export DEBUG=${{ secrets.DEBUG }}
             echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> /home/runner/work/django_jatu_ru/django_jatu_ru/.env
             echo DEBUG=${{ secrets.DEBUG }} >> /home/runner/work/django_jatu_ru/django_jatu_ru/.env
-      - uses: actions/checkout@v2
       - name: Run tests
         run: docker-compose up --exit-code-from tests tests
-        with:
-          script: |
-            echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> /home/runner/work/django_jatu_ru/django_jatu_ru/.env
-            echo DEBUG=${{ secrets.DEBUG }} >> /home/runner/work/django_jatu_ru/django_jatu_ru/.env
