@@ -34,6 +34,12 @@ if os.environ['DEBUG'] == 'True':
     DEBUG = True
 elif os.environ['DEBUG'] == 'False':
     DEBUG = False
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            'LOCATION': os.path.join(BASE_DIR, 'django_cache'),
+        }
+    }
 
 ALLOWED_HOSTS = []
 
@@ -213,9 +219,10 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-#         'LOCATION': os.path.join(BASE_DIR, 'django_cache'),
-#     }
-# }
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_PORT = os.environ['EMAIL_PORT']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_USER_TLS = False
+EMAIL_USER_SSL = True
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
